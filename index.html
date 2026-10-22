@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>រៀបចំកន្លែងអង្គុយសិស្ស</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&family=Moul&display=swap');
+
+    body {
+      font-family: 'Hanuman', sans-serif;
+      background-color: #fdfaf0;
+      /* matching the image background */
+    }
+
+    .title-font {
+      font-family: 'Moul', cursive;
+    }
+
+    /* Diagonal stripes pattern for the decorative bar */
+    .stripe-pattern {
+      background: repeating-linear-gradient(-45deg,
+          #f1c40f,
+          #f1c40f 10px,
+          #e74c3c 10px,
+          #e74c3c 20px,
+          #2ecc71 20px,
+          #2ecc71 30px,
+          #3498db 30px,
+          #3498db 40px);
+    }
+
+    /* Print Specific Styles */
+    @media print {
+      body {
+        background-color: white !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .print-container {
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        border: none !important;
+      }
+
+      /* Hide the decorative top bar on print if it takes too much space, or keep it */
+      .fixed-top-bar {
+        display: none !important;
+      }
+
+      .print-margin-top {
+        margin-top: 0 !important;
+      }
+
+      /* Ensure grid breaks nicely */
+      .seat-item {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body class="text-gray-800 flex flex-col items-center min-h-screen">
+
+  <div
+    class="fixed-top-bar w-full bg-[#1e2b3c] text-white py-3 px-6 flex items-center fixed top-0 left-0 right-0 z-20 shadow-md">
+    <button onclick="window.location.href='../../index.html'"
+      class="bg-[#3a475a] hover:bg-[#4a576a] text-sm px-4 py-1.5 rounded border border-gray-600 mr-4 transition-colors flex items-center gap-2">
+      <span>&larr;</span> ត្រឡប់
+    </button>
+    <div class="flex items-center text-lg font-bold">
+      <svg class="w-5 h-5 text-orange-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M7 2v11h10V2H7zm8 9H9V4h6v7z" />
+        <path d="M4 14v8h2v-5h12v5h2v-8c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2z" />
+      </svg>
+      រៀបចំកន្លែងអង្គុយសិស្ស
+    </div>
+  </div>
+
+  <!-- Colorful stripe under navbar -->
+  <div
+    class="fixed-top-bar w-full h-3 stripe-pattern fixed top-[56px] left-0 right-0 z-10 shadow-sm border-b border-gray-800">
+  </div>
+
+  <div class="w-full max-w-6xl mt-28 px-4 no-print flex flex-col md:flex-row gap-6 mb-8 print-margin-top">
+
+    <!-- Grid Settings -->
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200 flex-1">
+      <h3 class="font-bold text-gray-700 mb-4 border-b pb-2 flex items-center gap-2">
+        <span class="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">១</span>
+        កំណត់ទំហំបន្ទប់
+      </h3>
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-600 mb-1">ចំនួនជួរឈរ (Columns)</label>
+          <input type="number" id="colsInput" min="1" max="15" value="4"
+            class="border border-gray-300 rounded-lg p-2.5 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow" />
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-600 mb-1">ចំនួនជួរដេក (Rows)</label>
+          <input type="number" id="rowsInput" min="1" max="20" value="4"
+            class="border border-gray-300 rounded-lg p-2.5 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow" />
+        </div>
+      </div>
+      <div class="mt-4 text-sm text-gray-500 bg-gray-50 p-2 rounded border border-gray-100 text-center">
+        សរុបចំនួនកៅអី៖ <span id="totalSeatsDisplay" class="font-bold text-lg text-gray-700">16</span>
+      </div>
+    </div>
+
+    <!-- Student Input -->
+    <div class="bg-white p-5 rounded-xl shadow-md border border-gray-200 flex-[1.5]">
+      <h3 class="font-bold text-gray-700 mb-4 border-b pb-2 flex items-center gap-2">
+        <span class="bg-green-100 text-green-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">២</span>
+        បញ្ចូលឈ្មោះសិស្ស
+      </h3>
+      <textarea id="studentInputArea"
+        class="border border-gray-300 rounded-lg p-3 w-full h-24 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm transition-shadow resize-none"
+        placeholder="វាយឈ្មោះសិស្សនៅទីនេះ (អាចបញ្ចួលច្រើននាក់ដោយចុះបន្ទាត់ ឬប្រើសញ្ញាក្បៀស)..."></textarea>
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <span class="text-sm text-gray-500 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">
+          សិស្សសរុបបានបញ្ចូល៖ <span id="totalStudentsDisplay" class="font-bold text-blue-600 text-base">12</span> នាក់
+        </span>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button id="clearBtn"
+            class="flex-1 sm:flex-none bg-white text-red-500 hover:bg-red-50 border border-red-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            លុបទាំងអស់
+          </button>
+          <button id="addBtn"
+            class="flex-1 sm:flex-none bg-[#3498db] text-white hover:bg-[#2980b9] px-6 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+            + បន្ថែមសិស្ស
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-full max-w-6xl bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-10 mb-12 print-container relative overflow-hidden">
+
+    <!-- Decorative stripe at the top of the card -->
+    <div class="absolute top-0 left-0 w-full h-2 stripe-pattern no-print"></div>
+
+    <!-- Chart Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 mt-2">
+      <h2 class="text-xl md:text-2xl font-bold text-gray-800 flex items-center title-font">
+        <svg class="w-6 h-6 text-[#d35400] mr-3" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M7 2v11h10V2H7zm8 9H9V4h6v7z" />
+          <path d="M4 14v8h2v-5h12v5h2v-8c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2z" />
+        </svg>
+        រៀបចំប្លង់តុអង្គុយរៀនក្នុងថ្នាក់
+      </h2>
+
+      <div class="flex gap-3 no-print w-full md:w-auto">
+        <button id="randomizeBtn"
+          class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#27ae60] hover:bg-[#219653] text-white px-5 py-2.5 rounded-full font-medium transition-colors shadow-md">
+          <span class="text-xl">🎲</span> រៀបចៃដន្យ
+        </button>
+        <button id="printBtn"
+          class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#2980b9] hover:bg-[#2471a3] text-white px-5 py-2.5 rounded-full font-medium transition-colors shadow-md">
+          <span class="text-xl">🖨️</span> បោះពុម្ពប្លង់តុ
+        </button>
+      </div>
+    </div>
+
+    <!-- Teacher Desk / Front of class indicator -->
+    <div
+      class="w-full bg-[#27ae60] text-white text-center py-3.5 rounded-lg mb-10 font-bold text-lg shadow-inner border-b-4 border-[#1e8449]">
+      👨‍🏫 👩‍🏫 ក្តារខៀន (ខាងមុខថ្នាក់រៀន)
+    </div>
+
+    <!-- The grid columns will be set dynamically via JS -->
+    <div id="seatsGrid" class="grid gap-4 md:gap-5">
+      <!-- Seats will be generated here -->
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="mb-10 text-gray-400 text-sm no-print">
+    កម្មវិធីរៀបប្លង់តុសិស្សអង្គុយ
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // State variables
+      let state = {
+        columns: 4,
+        rows: 4,
+        students: [
+          'សោម ចាន់នី', 'លី ស្រីណុច', 'មាស ស្រីលក្ខណ៍', 'កែវ សុភា',
+          'តាំង សុធារី', 'ហ៊ាង វិចិត្រ', 'ស៊ុន ស៊ីម៉ាអ៊ុន', 'ណុប វីរៈ',
+          'សុខ ឧត្តម', 'ចាន់ ធារ៉ា', 'អ៊ុន ពិសិដ្ឋ', 'រ៉ា បុប្ផា'
+        ],
+        seats: []
+      };
+
+      // DOM Elements
+      const colsInput = document.getElementById('colsInput');
+      const rowsInput = document.getElementById('rowsInput');
+      const totalSeatsDisplay = document.getElementById('totalSeatsDisplay');
+      const studentInputArea = document.getElementById('studentInputArea');
+      const totalStudentsDisplay = document.getElementById('totalStudentsDisplay');
+      const addBtn = document.getElementById('addBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const randomizeBtn = document.getElementById('randomizeBtn');
+      const printBtn = document.getElementById('printBtn');
+      const seatsGrid = document.getElementById('seatsGrid');
+
+      // Generate seats array based on students list and grid size
+      const generateSeats = () => {
+        const totalSeats = state.columns * state.rows;
+        state.seats = [];
+        for (let i = 0; i < totalSeats; i++) {
+          state.seats.push(state.students[i] || null);
+        }
+        renderApp();
+      };
+
+      // Update UI based on current state
+      const renderApp = () => {
+        // Update inputs if they differ (to keep in sync if changed programmatically)
+        if (parseInt(colsInput.value) !== state.columns) colsInput.value = state.columns;
+        if (parseInt(rowsInput.value) !== state.rows) rowsInput.value = state.rows;
+
+        // Update text displays
+        totalSeatsDisplay.textContent = state.columns * state.rows;
+        totalStudentsDisplay.textContent = state.students.length;
+
+        // Render Grid
+        seatsGrid.style.gridTemplateColumns = `repeat(${state.columns}, minmax(0, 1fr))`;
+        seatsGrid.innerHTML = ''; // Clear current grid
+
+        state.seats.forEach((student, index) => {
+          const seatDiv = document.createElement('div');
+
+          // Base classes for a seat
+          let classes = 'seat-item flex flex-col items-center justify-center p-3 md:p-4 border-2 rounded-xl transition-all duration-300 relative bg-white';
+
+          if (student) {
+            // Styled for filled seat (matching image: blue border, slightly tinted background)
+            classes += ' border-[#3498db] shadow-sm hover:shadow-md';
+          } else {
+            // Styled for empty seat
+            classes += ' border-gray-200 border-dashed opacity-70';
+          }
+
+          seatDiv.className = classes;
+
+          // Seat Number
+          const seatNum = document.createElement('span');
+          seatNum.className = 'text-[11px] text-gray-500 mb-1 font-medium absolute top-2 left-2';
+          seatNum.textContent = `តុទី ${index + 1}`;
+          seatDiv.appendChild(seatNum);
+
+          // Chair Icon (SVG)
+          const iconWrapper = document.createElement('div');
+          iconWrapper.className = 'mt-3 mb-2';
+          iconWrapper.innerHTML = `
+                        <svg class="w-8 h-8 text-[#d35400]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M7 2v11h10V2H7zm8 9H9V4h6v7z" />
+                            <path d="M4 14v8h2v-5h12v5h2v-8c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2z" />
+                        </svg>
+                    `;
+          seatDiv.appendChild(iconWrapper);
+
+          // Student Name
+          const nameSpan = document.createElement('span');
+          if (student) {
+            nameSpan.className = 'font-bold text-center w-full px-1 text-gray-800 text-sm md:text-base leading-tight';
+            // Handle long names nicely
+            nameSpan.style.wordBreak = 'break-word';
+            nameSpan.textContent = student;
+          } else {
+            nameSpan.className = 'text-gray-400 italic text-xs mt-1';
+            nameSpan.textContent = 'ទំនេរ';
+          }
+          seatDiv.appendChild(nameSpan);
+
+          seatsGrid.appendChild(seatDiv);
+        });
+      };
+
+      colsInput.addEventListener('input', (e) => {
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) val = 1;
+        state.columns = val;
+        generateSeats();
+      });
+
+      rowsInput.addEventListener('input', (e) => {
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) val = 1;
+        state.rows = val;
+        generateSeats();
+      });
+
+      addBtn.addEventListener('click', () => {
+        const input = studentInputArea.value.trim();
+        if (!input) return;
+
+        // Split by newline or comma, trim, filter empty
+        const newStudents = input
+          .split(/[\n,]+/)
+          .map(s => s.trim())
+          .filter(s => s !== '');
+
+        state.students = [...state.students, ...newStudents];
+        studentInputArea.value = ''; // clear input
+        generateSeats();
+      });
+
+      clearBtn.addEventListener('click', () => {
+        if (confirm('តើអ្នកពិតជាចង់លុបឈ្មោះសិស្សទាំងអស់មែនទេ?')) {
+          state.students = [];
+          generateSeats();
+        }
+      });
+
+      randomizeBtn.addEventListener('click', () => {
+        // Fisher-Yates shuffle algorithm
+        let currentIndex = state.students.length, randomIndex;
+        while (currentIndex !== 0) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+          [state.students[currentIndex], state.students[randomIndex]] = [
+            state.students[randomIndex], state.students[currentIndex]
+          ];
+        }
+        generateSeats();
+      });
+
+      printBtn.addEventListener('click', () => {
+        window.print();
+      });
+
+      // Initial render
+      generateSeats();
+    });
+  </script>
+</body>
+
+</html>
